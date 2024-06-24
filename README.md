@@ -57,3 +57,18 @@
 
 - 인터룹트(interrupt)
     - 어떤 상황에서도 제일 우선적으로 실행되는 동작
+
+## 2일차(24.06.21)
+- 라즈베리 파이 파이썬
+    - 가상환경
+        - python -V : 파이썬 버전 확인
+        - python -m venv env(가상환경명) : 가상환경 env 생성
+        - source ./env/bin/activate : 가상환경 실행
+        - pip install '라이브러리 명'
+        - deactivate : 가상환경 실행 중지(빠져나오기)
+    
+    - Wiring
+        - 라즈베리파이에서 GPIO에 접근하는 방법
+        - https://github.com/Wiring/Wiring
+        - Wiring 폴더 안에서 ./bulid 실행
+        - gpio readall : 라즈베리파이의 gpio에 대한 핀 정보가 출력
