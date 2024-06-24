@@ -52,7 +52,7 @@
         - 스위치가 열려있으면 어디에도 전류가 공급되지 않는 상태
         - 스위치가 닫혀있으면 입력핀으로 전류가 흐르고 5V 전압이 걸리게됨
         
-    <img src="https://raw.githubusercontent.com/YooWangGwon/basic-iot-openHardware-2024/main/images/ioh001.png">
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh001.png">
 
 
 - 인터룹트(interrupt)
@@ -88,7 +88,7 @@
         - 릴레이 모듈 NO or NC : LED 모듈의 VCC와 연결
         - LED 모듈 RGB : GND 연결
 
-    <img src="https://raw.githubusercontent.com/YooWangGwon/basic-iot-openHardware-2024/main/images/ioh002.jpg">
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh002.jpg">
 
 - 스텝 모터와 모터 드라이버
     - 스텝 모터 : 한 바퀴의 회전을 많은 수의 스텝 들로 나눌 수 있는 앙페르의 오른손 법칙을 활용한 브러쉬리스 직류 전기 모터
@@ -105,7 +105,8 @@
         - 모터 드라이버 - : GND 연결
         - 모터 드라이버 IN1 ~ IN4 : 각각의 GPIO에 연결
 
-    <img src="https://raw.githubusercontent.com/YooWangGwon/basic-iot-openHardware-2024/main/images/ioh003.jpg">
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh003.jpg">
+    
 
 - Flask
     - 웹 애플리케이션 개발을 위한 파이썬 프레임워크
