@@ -5,7 +5,7 @@
 import RPi.GPIO as GPIO
 import time
 
-switch = 6
+switch = 18
 red = 16
 blue = 20
 green = 21

@@ -3,7 +3,7 @@
 # desc : HTML를 활용한 flask 연습
 
 import RPi.GPIO as GPIO
-from flask import Flask
+from flask import Flask, request, render_template
 
 led = 13
 
@@ -14,24 +14,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-	return render_template("<h1>Hello LED Controller</h1>
-							")
+	return render_template("index.html")
 
-@app.route("/led/<state>")
-def led_control(state):
+@app.route("/data", methods = [ 'POST' ])
+def led_control():
+	state = request.form['led']
 	if state == "on":
 		GPIO.output(led, False)
-		return "<h1>LED ON</h1>"
+		return index()
 
 	elif state == "off":
 		GPIO.output(led, True)
-		return	"<h1>LED OFF</h2>"
-
-	elif state == "clear":
-		GPIO.cleanup()
-		return "GPIO cleanup()"
-	else:
-		return "LED Controller"
+		return index()
 
 if __name__ == "__main__":
 	try:
