@@ -52,7 +52,7 @@
         - 스위치가 열려있으면 어디에도 전류가 공급되지 않는 상태
         - 스위치가 닫혀있으면 입력핀으로 전류가 흐르고 5V 전압이 걸리게됨
         
-    <img src="https://raw.githubusercontent.com/YooWangGwon/basic-iot-openHardware-2024/main/images/ioh001.png">
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh001.png">
 
 
 - 인터룹트(interrupt)
@@ -63,6 +63,7 @@
     - 가상환경
         - python -V : 파이썬 버전 확인
         - python -m venv env(가상환경명) : 가상환경 env 생성
+        - python -m venv --system-site-packages env : 옵션이 포함된 가상환경 env 생성
         - source ./env/bin/activate : 가상환경 실행
         - pip install '라이브러리 명'
         - deactivate : 가상환경 실행 중지(빠져나오기)
@@ -72,3 +73,71 @@
         - https://github.com/Wiring/Wiring
         - Wiring 폴더 안에서 ./bulid 실행
         - gpio readall : 라즈베리파이의 gpio에 대한 핀 정보가 출력
+
+## 3일차(24.06.24)
+- 릴레이 모듈
+    - 용도 : 신호를 만들어내어 자동으로 ON/OFF를 조정하는 스위치 역할의 모듈
+    - 사용 모듈 : 1채널 5V 미니 릴레이 모듈
+    - NO(열린 접점) : 평상시에 열려있음, 신호가 가면 닫힘
+    - NC(닫힌 접점) : 평상시에 닫혀있음, 신호가 가면 열림
+    - 예시(LED모듈 스위치)
+        - 릴레이 모듈 S : GPIO 연결
+        - 릴레이 모듈 + : 5V 연결
+        - 릴레이 모듈 - : GND 연결
+        - 릴레이 모듈 COM : 5V 연결
+        - 릴레이 모듈 NO or NC : LED 모듈의 VCC와 연결
+        - LED 모듈 RGB : GND 연결
+
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh002.jpg">
+
+- 스텝 모터와 모터 드라이버
+    - 스텝 모터 : 한 바퀴의 회전을 많은 수의 스텝 들로 나눌 수 있는 앙페르의 오른손 법칙을 활용한 브러쉬리스 직류 전기 모터
+    - 앙페르의 오른손 법칙 : 
+    - 모터 드라이버 : 스텝 모터를 원활하게 제어하기 위한 장치
+    - 모터를 라즈베리 파이에 직접 연결하지 말것(모터의 전원이 종료될 때 연기전력이 발생되기 때문)
+    - 스텝 모터 작동 방식
+        - 1상 여자 방식 : 차례로 1개으 상에 전기 신호를 줌
+        - 2상 여자 방식 : 동시에 2개의 상에 전기 신호를 줌
+        - 1-2상 여자 방식 : 1상과 2상 방식을 반복
+
+    - 예시
+        - 모터 드라이버 + : 5V 연결
+        - 모터 드라이버 - : GND 연결
+        - 모터 드라이버 IN1 ~ IN4 : 각각의 GPIO에 연결
+
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh003.jpg">
+    
+
+- Flask
+    - 웹 애플리케이션 개발을 위한 파이썬 프레임워크
+
+    ```python
+    from flask import Flask # name 이름을 통한 flask 객체 생성
+    app = Flask(__name__)
+
+    @app.route("/") # 라우팅을 위한 뷰 함수
+    def hello():    # 등록 사이트에 접속을 성공한다면 hello 함수 실행
+    return "Hello World!"
+
+    if __name__ == "__main__":  # 터미널에서 직접 실행시키면 실행 파일이 main으로 바뀜
+        app.run(host="0.0.0.0", port="10111", debug=True)
+    ```
+
+    - GET 방식 데이터 전달 방법
+
+    ```python
+    # 주소전달 방법 : 주소/?이름=James&주소=Busan
+
+    from flask import Flask, request
+
+    app = Flask(__name__)
+
+    @app.route("/")
+    def get():
+        value1 = request.args.get("이름","user")
+        value2 = request.args.get("주소","부산")
+        return value1+ ":" + value2
+
+    if __name__ == "__main__":
+        app.run(host = "0.0.0.0", port="18080", debug = True)
+    ```
