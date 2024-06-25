@@ -141,3 +141,15 @@
     if __name__ == "__main__":
         app.run(host = "0.0.0.0", port="18080", debug = True)
     ```
+## 4일차(24.06.24)
+- 카메라 모듈
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh004.jpg">
+- FND 모듈
+    - 4-digit 규격의 공통 음극(Common Cathod)방식
+        - a ~ dp : VCC(HIGH)
+        - COM1 ~ COM4 : GND(LOW)
+    - 4-digit 규격의 공통 양극(Common Anode)방식
+        - a ~ dp : GND(LOW)
+        - COM1 ~ COM4 : VCC(HIGH)
+
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh005.png">
