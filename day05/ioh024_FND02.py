@@ -16,7 +16,7 @@ f = 25
 g = 26
 dp = 19
 
-btn = 13
+btn = 4
 
 i = 0
 
@@ -33,9 +33,6 @@ for n in range(0,8):	# FND GPIO 설정
 	GPIO.setup(led[n], GPIO.OUT)
 
 GPIO.setup(btn, GPIO.IN)	# 버튼 GPIO 설정
-
-#GPIO.setup(g, GPIO.OUT)
-#GPIO.setup(dp, GPIO.OUT)
 
 try:
 	while True:

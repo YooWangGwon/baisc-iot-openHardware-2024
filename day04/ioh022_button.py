@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-Btn = 12
+Btn = 4
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(Btn, GPIO.IN)
