@@ -43,27 +43,27 @@ def setup():
         GPIO.output(pin, GPIO.HIGH)
 
 def display_number(number):
-    digits = [int(d) for d in str(number).zfill(4)]	# 각 자리의 숫자를 문자 형태로 분할
+	digits = [int(d) for d in str(number).zfill(4)]	# 각 자리의 숫자를 문자 형태로 분할
 	# 각 자리마다 순차적인 출력 시작
 	for i in range(4):
-        GPIO.output(digit_pins[i], GPIO.LOW)	# 출력할 자릿수를 LOW로 변경하여 전류가 흐를 수 있게 설정
-        pattern = segment_patterns[digits[i]]	# 해당 자릿수에 출력할 숫자를 표현하는 0과 1의 패턴  리스트를 가져옴
-        for pin, state in zip(segment_pins, pattern):	# segment_pin의 순서와 패턴 리스트 순서에 맞게 작업 시작
-            GPIO.output(pin, state)
-        time.sleep(0.005)	# 숫자가 표시되고 0.005초 대기
-        GPIO.output(digit_pins[i], GPIO.HIGH)	# 출력한 자릿수를 다시 HIGH로 변경
+		GPIO.output(digit_pins[i], GPIO.LOW)	# 출력할 자릿수를 LOW로 변경하여 전류가 흐를 수 있게 설정
+		pattern = segment_patterns[digits[i]]	# 해당 자릿수에 출력할 숫자를 표현하는 0과 1의 패턴  리스트를 가져옴
+		for pin, state in zip(segment_pins, pattern):	# segment_pin의 순서와 패턴 리스트 순서에 맞게 작업 시작
+			GPIO.output(pin, state)
+		time.sleep(0.005)	# 숫자가 표시되고 0.005초 대기
+		GPIO.output(digit_pins[i], GPIO.HIGH)	# 출력한 자릿수를 다시 HIGH로 변경
 
 def main():
-    setup()	# GPIO 핀 초기화
-    try:
-        for number in range(1, 10000): # 1에서 9999까지 숫자 범위 안에서
-            start_time = time.time()	# 현재 시간을 초 단위로 저장
-            while time.time() - start_time < 1:	# 1초 동안 숫자를 계속 표시
-                display_number(number)
-    except KeyboardInterrupt:
-        print("")
-    finally:
-        GPIO.cleanup()
+	setup()	# GPIO 핀 초기화
+	try:
+		for number in range(1, 10000): # 1에서 9999까지 숫자 범위 안에서
+			start_time = time.time()	# 현재 시간을 초 단위로 저장
+			while time.time() - start_time < 1:	# 1초 동안 숫자를 계속 표시
+				display_number(number)
+	except KeyboardInterrupt:
+		print("")
+	finally:
+		GPIO.cleanup()
 
 if __name__ == '__main__':
-    main()
+	main()
