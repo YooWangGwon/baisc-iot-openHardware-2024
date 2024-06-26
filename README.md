@@ -143,7 +143,9 @@
     ```
 ## 4일차(24.06.24)
 - 카메라 모듈
+
     <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh004.jpg" width=400>
+
 - FND 모듈
 
     <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh005.png">
