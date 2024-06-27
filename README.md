@@ -141,7 +141,7 @@
     if __name__ == "__main__":
         app.run(host = "0.0.0.0", port="18080", debug = True)
     ```
-## 4일차(24.06.24)
+## 4일차(24.06.25)
 - 카메라 모듈
 
     <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh004.jpg" width=400>
@@ -168,9 +168,24 @@
 
 
 
-## 5일차(24.06.24)
+## 5일차(24.06.26)
 - FND 모듈
     - 버튼을 클릭하면 FND에 표시되는 숫자가 올라가는 기능 구현
     - 1초마다 FND에 표시되는 숫자가 올라가는 기능 구현
 
     <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh008.jpg">
+
+## 6일차(24.06.27)
+- FND 모듈
+    - 16 진법을 활용하여 FND 출력
+
+    ```python
+    segment_patterns = [0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x27, 0x7f, 0x6f]
+    def fndOut(data):   # 하나의 숫자 형태를 만드는 함수
+    for i in range(0, 7):
+        GPIO.output(segment_pins[i], segment_patterns[data] & (0x01 << i))
+    ```
+
+- MQTT
+    - PyQy
+        - Qt Tools 설치하기 : sudo apt install qttools5-dev-tools
