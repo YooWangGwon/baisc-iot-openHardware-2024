@@ -143,13 +143,34 @@
     ```
 ## 4일차(24.06.24)
 - 카메라 모듈
-    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh004.jpg">
+
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh004.jpg" width=400>
+
 - FND 모듈
-    - 4-digit 규격의 공통 음극(Common Cathod)방식
-        - a ~ dp : VCC(HIGH)
-        - COM1 ~ COM4 : GND(LOW)
-    - 4-digit 규격의 공통 양극(Common Anode)방식
-        - a ~ dp : GND(LOW)
-        - COM1 ~ COM4 : VCC(HIGH)
 
     <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh005.png">
+
+    - 화면에 표시되는 Digit(COM1~COM2)과 Segmentation(a ~ dp)으로 구성
+
+    - 작동 방식
+        - 4-digit 규격의 공통 음극(Common Cathod)방식
+            - Segmentation : VCC(HIGH)
+            - Digit : GND(LOW)
+
+            <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh006.png">
+            
+
+        - 4-digit 규격의 공통 양극(Common Anode)방식
+            - Segmentation : GND(LOW)
+            - Digit : VCC(HIGH)
+
+            <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh007.png">
+
+
+
+## 5일차(24.06.24)
+- FND 모듈
+    - 버튼을 클릭하면 FND에 표시되는 숫자가 올라가는 기능 구현
+    - 1초마다 FND에 표시되는 숫자가 올라가는 기능 구현
+
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh008.jpg">
