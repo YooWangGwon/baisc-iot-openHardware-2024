@@ -56,10 +56,10 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>109</y>
-      <width>141</width>
-      <height>22</height>
+      <x>10</x>
+      <y>100</y>
+      <width>181</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -85,8 +85,8 @@
      <rect>
       <x>30</x>
       <y>149</y>
-      <width>141</width>
-      <height>31</height>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -101,7 +101,7 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>Humidity</string>
+     <string>Humidity(%)</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -220,6 +220,22 @@
     </property>
     <property name="value">
      <number>50</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>90</y>
+      <width>68</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>temp.ico</pixmap>
     </property>
    </widget>
   </widget>
