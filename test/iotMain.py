@@ -6,6 +6,7 @@ import sys
 import RPi.GPIO as GPIO
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
+from PyQt5.QtCore import QTimer
 import time
 import adafruit_dht
 import board
@@ -13,7 +14,6 @@ import board
 
 led_pin = [4,5,6]	# red, green, blue
 DHT_pin = 16
-log_num = 0
 
 
 form_class = uic.loadUiType("./iotProgram.ui")[0]
@@ -22,20 +22,21 @@ GPIO.setmode(GPIO.BCM)
 for pin in led_pin:
 	GPIO.setup(pin, GPIO.OUT)
 GPIO.setup(DHT_pin, GPIO.IN)
-dhtDevice = adafruit_dht.DHT11(board.D16)
 
 # WindowClass 선언
-class WindowClass(QMainWindow, form_class):
+class WindowClass(QMainWindow):
 	def __init__ (self):	# 생성자, 첫번째 인자는 자기자신을 의미하는 self
 		super().__init__()	# 부모 클래스 생성자(QWidget이 부모클래스이므로 QWidget의 생성자임)
-		self.setupUi(self)
+		uic.loadUi("./iotProgram.ui")
+        #self.sensor = adafruit_dht.DHT11
 
-		# 이벤트  함수 등록
+	def initUi(self) -> None:
 		self.Btn1.clicked.connect(self.btn1Function)
 		self.Btn2.clicked.connect(self.btn2Function)
 		self.Btn3.clicked.connect(self.btn3Function)
 		self.Btn4.clicked.connect(self.btn4Function)
 		self.DHT_ON.clicked.connect(self.DHT_onFunc)
+
 	# LED 관련 함수
 
 	def btn1Function(self):
@@ -67,18 +68,20 @@ class WindowClass(QMainWindow, form_class):
 
 	def DHT_onFunc(self):
 		try:
-			log_num += 1
+			dhtDevice = adafruit_dht.DHT11(board.D16)
 			temp = dhtDevice.temperature
 			humid = dhtDevice.humidity
+			#print(f'{log_num}- Temp:{temp}/humid:{humid}')
 			#self.textEdit1.setText(f'{log_num} - Temp : {temp}C / Humid : {humid}%\n')
-			print(f'{log_num} - Temp : {temp}C / Humid : {humid}%\n')
-			log_num += 1
+			print(f'Temp : {temp}C / Humid : {humid}%\n')
+			dhtDevice.exit()
+
 		except RuntimeError as ex:
 			print(ex.args[0])
 
 	def DHT_offFunc(self):
 		print('DHT OFF!!!')
-		dhtDevice.exit()
+		#dhtDevice.exit()
 
 
 	def slot1(self):
