@@ -13,6 +13,7 @@ import board
 
 led_pin = [4,5,6]	# red, green, blue
 DHT_pin = 16
+log_num = 0
 
 
 form_class = uic.loadUiType("./iotProgram.ui")[0]
@@ -22,7 +23,6 @@ for pin in led_pin:
 	GPIO.setup(pin, GPIO.OUT)
 GPIO.setup(DHT_pin, GPIO.IN)
 dhtDevice = adafruit_dht.DHT11(board.D16)
-
 
 # WindowClass 선언
 class WindowClass(QMainWindow, form_class):
@@ -66,19 +66,18 @@ class WindowClass(QMainWindow, form_class):
 	# DHT 관련 함수
 
 	def DHT_onFunc(self):
-		log_num = 0
 		try:
 			log_num += 1
 			temp = dhtDevice.temperature
 			humid = dhtDevice.humidity
 			#self.textEdit1.setText(f'{log_num} - Temp : {temp}C / Humid : {humid}%\n')
 			print(f'{log_num} - Temp : {temp}C / Humid : {humid}%\n')
-			time.sleep(2)
+			log_num += 1
 		except RuntimeError as ex:
 			print(ex.args[0])
-		dhtDevice.exit()
 
 	def DHT_offFunc(self):
+		print('DHT OFF!!!')
 		dhtDevice.exit()
 
 
