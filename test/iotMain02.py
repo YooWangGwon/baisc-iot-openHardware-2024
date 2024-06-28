@@ -129,25 +129,25 @@ class WindowClass(QMainWindow, form_class):
 			self.Buzz.stop()
 
 	def btn1Function(self):	# Red
-		print("Red LED Button Clicked!!")
+		print("Red LED ON!!")
 		GPIO.output(leds[0], False)
 		GPIO.output(leds[1], True)
 		GPIO.output(leds[2], True)
 
 	def btn2Function(self):	# Blue
-		print("Blue LED Button Clicked!!")
+		print("Blue LED ON!!")
 		GPIO.output(leds[0], True)
 		GPIO.output(leds[1], True)
 		GPIO.output(leds[2], False)
 
 	def btn3Function(self): # Green
-		print("Green LED Button Clicked!!")
+		print("Green LED ON!!")
 		GPIO.output(leds[0], True)
 		GPIO.output(leds[1], False)
 		GPIO.output(leds[2], True)
 
 	def btn4Function(self):
-		print("Red LED OFF!!")
+		print("LED OFF!!")
 		GPIO.output(leds[0], True)
 		GPIO.output(leds[1], True)
 		GPIO.output(leds[2], True)
@@ -165,4 +165,5 @@ if __name__ == "__main__":
 	myWindow = WindowClass()		# WindowClass() 인스턴스 생성
 	myWindow.show()					# 화면 보여주기
 	app.exec_()						# 프로그램 실행
+	sensor.exit()
 	GPIO.cleanup()
