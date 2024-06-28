@@ -74,7 +74,7 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>Temperature</string>
+     <string>Temperature(℃)</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
