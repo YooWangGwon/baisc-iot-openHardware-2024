@@ -13,9 +13,10 @@ form_class = uic.loadUiType("iotProgram.ui")[0]
 leds = [4,5,6]	# red, green, blue
 dht_pin = 16
 piezo_pin = 27
+fan_pin = 18
 
 # FND Digit 핀 설정
-com1 = 18
+# com1 = 18
 com2 = 17
 com3 = 13
 com4 = 12
@@ -31,7 +32,7 @@ g = 26
 dp = 19
 
 segment_pins = [a,b,c,d,e,f,g,dp]
-digit_pins = [com1, com2, com3, com4]
+digit_pins = [com2, com3, com4]
 
 # 숫자 표시에 사용할 값 세그먼트 패턴
 segment_patterns = [[1,1,1,1,1,1,0,0],[0,1,1,0,0,0,0,0],[1,1,0,1,1,0,1,0],
@@ -56,7 +57,6 @@ class WindowClass(QMainWindow, form_class):
 	def __init__ (self):	# 생성자, 첫번째 인자는 자기자신을 의미하는 self
 		super().__init__()	# 부모 클래스 생성자(QWidget이 부모클래스이므로 QWidget의 생성자임)
 		self.setupUi(self)
-		# 이벤트  함수 등록
 		self.humid = 0
 		self.temp = 0
 
@@ -74,17 +74,19 @@ class WindowClass(QMainWindow, form_class):
 			GPIO.setup(pin, GPIO.OUT)
 			GPIO.output(pin, GPIO.HIGH)
 
+		# DHT 센서 연결
 		self.sensor = adafruit_dht.DHT11(board.D16)
 		self.Buzz = GPIO.PWM(piezo_pin, 440)
 
 		# timer for DHT sensor
 		self.timer = QTimer(self)
 		self.timer.timeout.connect(self.update_data)
-		self.timer.timeout.connect(self.piezo_con)
-		self.timer.start(1000)
+		self.timer.timeout.connect(self.module_con)
+		self.timer.start()
 
 		self.update_data()
 
+	# DHT 센서에서 온습도 정보 가져오기
 	def update_data(self):
 		try:
 			humidity = self.sensor.humidity
@@ -105,11 +107,12 @@ class WindowClass(QMainWindow, form_class):
 		except RuntimeError as ex:
 			print(ex.args[0])
 
-	def piezo_con(self):
+	# 가져온 온습도 정보를 바탕으로 모듈 작동
+	def module_con(self):
 		value = self.humidLevel.value()
 		if self.humid >= value and self.Chb_warning.isChecked():
 			try:
-				for i in range(3):
+				for _ in range(3):
 					self.Buzz.start(25)
 					self.Buzz.ChangeFrequency(200)
 					self.btn1Function()
@@ -124,7 +127,7 @@ class WindowClass(QMainWindow, form_class):
 				print(ex.args[0])
 		else:
 			self.btn3Function()
-			for i in range(300):
+			for _ in range(300):
 				display_number(int(self.humid))
 			self.Buzz.stop()
 
@@ -165,5 +168,4 @@ if __name__ == "__main__":
 	myWindow = WindowClass()		# WindowClass() 인스턴스 생성
 	myWindow.show()					# 화면 보여주기
 	app.exec_()						# 프로그램 실행
-	sensor.exit()
 	GPIO.cleanup()
