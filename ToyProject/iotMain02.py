@@ -42,9 +42,9 @@ segment_patterns = [[1,1,1,1,1,1,0,0],[0,1,1,0,0,0,0,0],[1,1,0,1,1,0,1,0],
 	[1,1,1,1,0,1,1,0]]
 
 def display_number(number):
-	digits = [int(d) for d in str(number).zfill(4)]	# 각 자리의 숫자를 문자 형태로 분할
+	digits = [int(d) for d in str(number).zfill(3)]	# 각 자리의 숫자를 문자 형태로 분할
 	# 각 자리마다 순차적인 출력 시작
-	for i in range(4):
+	for i in range(3):
 		GPIO.output(digit_pins[i], GPIO.LOW)	# 출력할 자릿수를 LOW로 변경하여 전류가 흐를 수 있게 설정
 		pattern = segment_patterns[digits[i]]	# 해당 자릿수에 출력할 숫자를 표현하는 0과 1의 패턴  리스트를 가져옴
 		for pin, state in zip(segment_pins, pattern):	# segment_pin의 순서와 패턴 리스트 순서에 맞게 작업 시작
@@ -67,6 +67,7 @@ class WindowClass(QMainWindow, form_class):
 			GPIO.setup(pin, GPIO.OUT)
 		GPIO.setup(dht_pin, GPIO.IN)
 		GPIO.setup(piezo_pin, GPIO.OUT)
+		GPIO.setup(fan_pin, GPIO.OUT)
 
 		for pin in segment_pins:	# 세그먼트 핀을 출력 모드로 설정
 			GPIO.setup(pin, GPIO.OUT)
@@ -84,8 +85,6 @@ class WindowClass(QMainWindow, form_class):
 		self.timer.timeout.connect(self.module_con)
 		self.timer.start()
 
-		self.update_data()
-
 	# DHT 센서에서 온습도 정보 가져오기
 	def update_data(self):
 		try:
@@ -98,10 +97,11 @@ class WindowClass(QMainWindow, form_class):
 				self.Lbl_time.setText(datetime)
 				self.LCD_temp.display(temperature)
 				self.LCD_humid.display(humidity)
-				print(f'{datetime} -> Temperature: {temperature:.1f}C\nHumidity: {humidity:.1f}%')
+				print(f'{datetime} -> Temperature: {temperature:.1f}C Humidity: {humidity:.1f}%')
 			else:
 				self.textEdit1.setText('Temperature: Error')
 				self.textEdit1.setText('Humidity: Error')
+				print(f'{datetime} -> Temperature: {temperature}C Humidity: {humidity}%')
 				print("Error Occured!!")
 
 		except RuntimeError as ex:
@@ -110,26 +110,31 @@ class WindowClass(QMainWindow, form_class):
 	# 가져온 온습도 정보를 바탕으로 모듈 작동
 	def module_con(self):
 		value = self.humidLevel.value()
-		if self.humid >= value and self.Chb_warning.isChecked():
+		if self.humid > value and self.Chb_warning.isChecked():
 			try:
+				GPIO.output(fan_pin, 1)
+				self.Buzz.start(25)
 				for _ in range(3):
-					self.Buzz.start(25)
 					self.Buzz.ChangeFrequency(200)
+
 					self.btn1Function()
-					start_time = time.time()
-					while time.time() - start_time < 0.5:
+					start_time1 = time.time()
+					while time.time() - start_time1 < 0.5:
 						display_number(int(self.humid))
-					self.Buzz.ChangeFrequency(500)
+
+					self.Buzz.ChangeFrequency(400)
 					self.btn2Function()
-					while time.time() - start_time < 0.5:
+					start_time2 = time.time()
+					while time.time() - start_time2 < 0.5:
 						display_number(int(self.humid))
+				self.Buzz.stop()
 			except RuntimeError as ex:
 				print(ex.args[0])
 		else:
+			GPIO.output(fan_pin, 0)
 			self.btn3Function()
 			for _ in range(300):
 				display_number(int(self.humid))
-			self.Buzz.stop()
 
 	def btn1Function(self):	# Red
 		print("Red LED ON!!")
@@ -159,6 +164,9 @@ class WindowClass(QMainWindow, form_class):
 		re = QMessageBox.question(self, 'Exit', 'Do you want to exit?', QMessageBox.Yes | QMessageBox. No)
 		if re == QMessageBox.Yes:
 			event.accept()
+			self.sensor.exit()
+			GPIO.cleanup()
+
 		else:
 			event.ignore()
 
@@ -168,4 +176,3 @@ if __name__ == "__main__":
 	myWindow = WindowClass()		# WindowClass() 인스턴스 생성
 	myWindow.show()					# 화면 보여주기
 	app.exec_()						# 프로그램 실행
-	GPIO.cleanup()
