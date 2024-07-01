@@ -165,5 +165,4 @@ if __name__ == "__main__":
 	myWindow = WindowClass()		# WindowClass() 인스턴스 생성
 	myWindow.show()					# 화면 보여주기
 	app.exec_()						# 프로그램 실행
-	sensor.exit()
 	GPIO.cleanup()
