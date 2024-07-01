@@ -16,7 +16,6 @@ piezo_pin = 27
 fan_pin = 18
 
 # FND Digit 핀 설정
-# com1 = 18
 com2 = 17
 com3 = 13
 com4 = 12
@@ -83,7 +82,18 @@ class WindowClass(QMainWindow, form_class):
 		self.timer = QTimer(self)
 		self.timer.timeout.connect(self.update_data)
 		self.timer.timeout.connect(self.module_con)
+
+		self.BtnStart.clicked.connect(self.startFunc)
+		self.BtnStop.clicked.connect(self.stopFunc)
+
+
+	def startFunc(self):
 		self.timer.start()
+
+	def stopFunc(self):
+		self.timer.stop()
+		self.btn4Function()
+		self.Buzz.stop()
 
 	# DHT 센서에서 온습도 정보 가져오기
 	def update_data(self):
