@@ -113,6 +113,7 @@ class WindowClass(QMainWindow, form_class):
 		if self.humid > value and self.Chb_warning.isChecked():
 			try:
 				GPIO.output(fan_pin, 1)
+				print("FAN ON!!")
 				self.Buzz.start(25)
 				for _ in range(3):
 					self.Buzz.ChangeFrequency(200)
@@ -132,6 +133,7 @@ class WindowClass(QMainWindow, form_class):
 				print(ex.args[0])
 		else:
 			GPIO.output(fan_pin, 0)
+			print("FAN OFF!!")
 			self.btn3Function()
 			for _ in range(300):
 				display_number(int(self.humid))
