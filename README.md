@@ -186,6 +186,25 @@
         GPIO.output(segment_pins[i], segment_patterns[data] & (0x01 << i))
     ```
 
-- MQTT
-    - PyQy
-        - Qt Tools 설치하기 : sudo apt install qttools5-dev-tools
+- PyQt
+    - Qt Designer 설치하기 : sudo apt-get install qttools5-dev-tools
+
+## 7일차(24.06.28)
+- ToyProject
+    - 온습도 센서를 이용한 프로그램 만들기
+
+    <img src="https://raw.githubusercontent.com/YooWangGwon/baisc-iot-openHardware-2024/main/images/ioh009.png">
+
+    - 사용 모듈
+        - 온습도 감지 센서(DHT센서) : adafruit_dht 활용
+        - 4-digit 7-segment 디스플레이
+        - LED 모듈
+        - 부저
+
+    - 구현 기능
+        - 실시간 온습도 측정
+        - 위험 수준의 습도 조정 기능(온도 조정 기능도 추가 예정)
+        - 경고 신호 ON/OFF 기능
+        - 위험 수준 습도 도달 시 경고음 발생
+        - 위험 수준 습도 도달 시 LED 색상 변경(빨강/파랑), 평상시에는 초록등
+        - 위험 수준 습도 도달 시 환기용 FAN 작동(예정)
